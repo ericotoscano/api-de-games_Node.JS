@@ -3,12 +3,21 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const connection = require("./database/database");
+const Game = require("./games/Game");
+const User = require("./users/User")
 
 const JWTSecret = "abcde";
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+connection.authenticate().then(() => {
+  console.log("Database connection has done!");
+}).catch((err) => {
+  console.log(err);
+});
 
 function auth(req, res, next) { // authentication middleware
 
@@ -45,27 +54,6 @@ function auth(req, res, next) { // authentication middleware
 
 var DB = {
 
-  games: [
-    {
-      id: 1,
-      title: "Call of Duty: Modern Warfare",
-      year: 2019,
-      price: 40
-    },
-    {
-      id: 2,
-      title: "Formula One 2022",
-      year: 2022,
-      price: 80
-    },
-    {
-      id: 3,
-      title: "Super Mario Bros",
-      year: 1990,
-      price: 10
-    },
-  ],
-
   users: [
     {
       id: 1,
@@ -85,8 +73,16 @@ var DB = {
 
 app.get("/games", auth, (req, res) => { // "auth" is an authentication middleware
   
-  res.statusCode = 200;
-  res.json(DB.games);
+  Game.findAll({raw: true, order: [
+   
+    ['id','ASC']
+
+  ]}).then(games => {
+   
+    res.statusCode = 200;
+    res.json(games);
+  
+  });
 
 });
 
@@ -120,16 +116,15 @@ app.post("/game", (req, res) => {
 
   var {title, year, price} = req.body;
 
-  DB.games.push({
-  
-    id: 4,
-    title,
-    year,
-    price
-  
+  Game.create({
+    title: title,
+    year: year,
+    price: price
+  }).then(() => {
+    res.sendStatus(200);
+  }, (err) => {
+    console.log("err");
   });
-
-  res.sendStatus(200);
 
 });
 
