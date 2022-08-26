@@ -39,6 +39,7 @@ function auth(req, res, next) { // authentication middleware
 
           req.token = token;
           req.loggedUser = {id: data.id, email: data.email}; // saving data on middleware, inside object 'req'
+          
           next(); // passes 'req' for route
 
         }
@@ -95,20 +96,25 @@ app.get("/game/:id", auth, (req, res) => {
   } else {
   
     var id = parseInt(req.params.id);
-    var game = DB.games.find(g => g.id == id);
 
-    if(game != undefined) {
+    Game.findOne({
+      where: {id: id}
+    }).then(game => {
+
+      if(game != undefined) {
     
-      res.statusCode = 200;
-      res.json(game);
-    
-    } else {
+        res.statusCode = 200;
+        res.json(game);
+
+      } else {
 
       res.sendStatus(404);
+      
+      }
+    
+    });
 
     }
-
-  }
 
 });
 
@@ -137,19 +143,32 @@ app.delete("/game/:id", (req, res) => {
   } else {
   
     var id = parseInt(req.params.id);
-    var index = DB.games.findIndex(g => g.id == id);
 
-    if(index == -1) {
+    Game.findOne({
+      where: {id: id}
+    }).then(game => {
+
+      if(game != undefined) {
+        
+        Game.destroy({
+          where: {
+            id: id
+          }
+        }).then(() => {
+
+        res.statusCode = 200;
+
+        });
+
+      } else {
 
       res.sendStatus(404);
-    } else {
-
-      DB.games.splice(index, 1);
-      res.sendStatus(200);
+      
+      }
+    
+    });
 
     }
-
-  }
 
 });
 
@@ -162,35 +181,36 @@ app.put("/game/:id", (req, res) => {
   } else {
   
     var id = parseInt(req.params.id);
-    var game = DB.games.find(g => g.id == id);
+    var {title, year, price} = req.body;
 
-    if(game != undefined) {
-    
-      var {title, year, price} = req.body;
+    Game.findOne({
+      where: {id: id}
+    }).then(game => {
 
-      if(title != undefined) {
-        game.title = title;
-      }
-    
-      if(year != undefined) {
-        game.year = year;
-      }
+      if(game != undefined) {
+        
+        Game.update({title: title, year: year, price: price}, {
+          where: {
+            id: id
+          }
+        }).then(() => {
 
-      if(price != undefined) {
-        game.price = price;
-      }
+        res.statusCode = 200;
 
-      res.sendStatus(200);
+        });
 
-    } else {
+      } else {
 
       res.sendStatus(404);
+      
+      }
+    
+    });
 
     }
 
-  }
-
 });
+  
 
 app.post("/auth", (req, res) => {
 
