@@ -4,6 +4,10 @@ const connection = require("../database/database");
 //Model
 const User = connection.define('users', {
 
+  name: {
+    type: Sequelize. STRING,
+    allowNull: false
+  },
   email: {
     type: Sequelize.STRING,
     allowNull: false
@@ -15,6 +19,6 @@ const User = connection.define('users', {
 
 });
 
-//User.sync({force: true}); REMOVER APÓS CRIAÇÃO DAS TABELAS
+//User.sync({force: true}); // REMOVE AFTER TABLE CREATION
 
 module.exports = User;

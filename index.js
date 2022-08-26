@@ -53,31 +53,10 @@ function auth(req, res, next) { // authentication middleware
     }
 }
 
-var DB = {
-
-  users: [
-    {
-      id: 1,
-      name: "Érico Toscano",
-      email: "dev.ericotoscano@gmail.com",
-      password: "12345"
-    },
-    {
-      id: 2,
-      name: "Sergio Toscano",
-      email: "dev.sergiotoscano@gmail.com",
-      password: "54321"
-    }
-  ]
-
-}
-
 app.get("/games", auth, (req, res) => { // "auth" is an authentication middleware
   
   Game.findAll({raw: true, order: [
-   
     ['id','ASC']
-
   ]}).then(games => {
    
     res.statusCode = 200;
@@ -129,7 +108,7 @@ app.post("/game", (req, res) => {
   }).then(() => {
     res.sendStatus(200);
   }, (err) => {
-    console.log("err");
+    console.log(err);
   });
 
 });
@@ -211,53 +190,69 @@ app.put("/game/:id", (req, res) => {
 
 });
   
+app.post("/user", (req, res) => {
+
+  var {name, email, password} = req.body;
+
+  User.create({
+    name: name,
+    email: email,
+    password: password
+  }).then(() => {
+
+    res.sendStatus(200);
+    
+  }, (err) => {
+  
+    console.log(err);
+  
+  });
+
+});
 
 app.post("/auth", (req, res) => {
 
   var {email, password} = req.body; //data comes from body of 'req' done by user
 
-  if(email != undefined) {
+    User.findOne({
+      where: {email: email}
+    }).then(user => {
 
-    var user = DB.users.find(u => u.email == email);
+      if(user != undefined) {
 
-    if(user != undefined) {
+        if(user.password == password) {
 
-      if(user.password == password) {
+          jwt.sign({id: user.id, email: user.email}, JWTSecret, {expiresIn: '48h'}, (err, token) => {
 
-        jwt.sign({id: user.id, email: user.email}, JWTSecret, {expiresIn: '48h'}, (err, token) => {
-          
-          if(err) {
+            if(err) {
 
-            res.status(400);
-            res.json({err: "Internal Error"});
-          
-          } else {
-          
-            res.status(200);
-            res.json({token: token});
-          
-          }
-        });
+              res.status(400);
+              res.json({err: "Internal Error"});
+            
+            } else {
+            
+              res.status(200);
+              res.json({token: token});
+            
+            }
+          });
+
+
+        } else {
+
+          res.status(401);
+          res.json({error: "Invalid authentication method"});
+        }
 
       } else {
 
-        res.status(401);
-        res.json({error: "Invalid Authentication Method"});
-      } 
+        res.status(404);
+        res.json({error: "Sended e-mail doesn't exist on database."})
 
-    } else {
+      }
 
-      res.status(404);
-      res.json({error: "Sended e-mail doesn't exist on database."})
+    });
 
-    }
-
-  } else {
-
-    res.status(400);
-    res.json({error: "Invalid e-mail."})
-
-  }
 });
 
 app.listen(8080, () => {
