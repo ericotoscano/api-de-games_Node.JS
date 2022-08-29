@@ -54,7 +54,7 @@ function auth(req, res, next) { // authentication middleware
 }
 
 app.get("/games", auth, (req, res) => { // "auth" is an authentication middleware
-  
+
   Game.findAll({raw: true, order: [
     ['id','ASC']
   ]}).then(games => {
@@ -76,6 +76,29 @@ app.get("/game/:id", auth, (req, res) => {
   
     var id = parseInt(req.params.id);
 
+    var HATEOAS = [
+      {
+        href: "http://localhost:8080/game/"+id,
+        method: "GET",
+        rel: "get_game"
+      },
+      {
+        href: "http://localhost:8080/game/"+id,
+        method: "PUT",
+        rel: "edit_game"
+      },
+      {
+        href: "http://localhost:8080/game/"+id,
+        method: "DELETE",
+        rel: "delete_game"
+      },
+      {
+        href: "http://localhost:8080/games",
+        method: "GET",
+        rel: "get_all_games"
+      }
+    ]
+
     Game.findOne({
       where: {id: id}
     }).then(game => {
@@ -83,7 +106,7 @@ app.get("/game/:id", auth, (req, res) => {
       if(game != undefined) {
     
         res.statusCode = 200;
-        res.json(game);
+        res.json({game, _links: HATEOAS});
 
       } else {
 
