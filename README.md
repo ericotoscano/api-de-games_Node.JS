@@ -223,9 +223,96 @@ Caso essa resposta ocorra, significa que ocorreu alguma falha durante o processo
 
 ### DELETE /game/:id
 
+Responsável por deletar um game cadastrado no banco de dados.
 
+#### _Parâmetros_
 
+"id": id do game no banco de dados
 
+Exemplo:
+
+```
+http://localhost:8080/game/1
+```
+
+#### _Respostas_
+
+- ##### Bad request (400)
+
+Caso essa resposta ocorra, o parâmetro "id" informado na rota não é do tipo numérico inteiro. Exemplo:
+
+```
+Bad Request
+```
+
+- ##### Ok (200)
+
+Caso essa resposta ocorra, o game, cujo parâmetro "id" foi informado na rota, foi deletado do banco de dados. Exemplo:
+
+```
+OK
+```
+
+- ##### Not found (404)
+
+Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valor numérico do parâmetro "id" informado na rota. Exemplo:
+
+```
+Not Found
+```
+
+### PUT /game/:id
+
+Responsável por editar um game cadastrado no banco de dados.
+
+#### _Parâmetros_
+
+"id": id do game no banco de dados
+
+"title": título do game.
+
+"year": ano de lançamento do game.
+
+"price": preço do game.
+
+Exemplo:
+
+```
+http://localhost:8080/game/1
+```
+```
+{
+    "title": "Need For Speed",
+    "year": "1998",
+    "price": "10" 
+}
+```
+
+#### _Respostas_
+
+- ##### Bad request (400)
+
+Caso essa resposta ocorra, o parâmetro "id" informado na rota não é do tipo numérico inteiro. Exemplo:
+
+```
+Bad Request
+```
+
+- ##### Ok (200)
+
+Caso essa resposta ocorra, o game, cujo parâmetro "id" foi informado na rota, foi atualizado, no banco de dados, com os parâmetros "title", "year" e "price" informados no corpo da requisição. Exemplo:
+
+```
+OK
+```
+
+- ##### Not found (404)
+
+Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valor numérico do parâmetro "id" informado na rota. Exemplo:
+
+```
+Not Found
+```
 
 ### POST /auth
 
