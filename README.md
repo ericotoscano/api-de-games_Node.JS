@@ -94,21 +94,20 @@ http://localhost:8080/game/1
 Caso essa resposta ocorra, o parâmetro "id" informado na rota não é do tipo numérico inteiro. Exemplo:
 
 ```
-Bad Request
+http://localhost:8080/game/g
 ```
 
 - ##### Not found (404)
 
-Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valor numérico do parâmetro "id" informado na rota. Exemplo:
-
-```
-Not Found
-```
+Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valor numérico do parâmetro "id" informado na rota.
 
 - ##### Ok (200)
 
 Caso essa resposta ocorra, você vai receber as informações do game solicitado e os links relacionados, em modelo HATEOAS. Exemplo:
 
+```
+http://localhost:8080/game/6
+```
 ```
 {
     "game": {
