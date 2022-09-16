@@ -84,7 +84,7 @@ Responsável por exibir as informações do game cujo "id" foi usado como parâm
 Exemplo:
 
 ```
-http://localhost:8080/game/1
+    http://localhost:8080/game/1
 ```
 
 #### _Respostas_
@@ -94,7 +94,7 @@ http://localhost:8080/game/1
 Caso essa resposta ocorra, o parâmetro "id" informado na rota não é do tipo numérico inteiro. Exemplo:
 
 ```
-http://localhost:8080/game/g
+    http://localhost:8080/game/g
 ```
 
 - ##### Not found (404)
@@ -106,7 +106,7 @@ Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valo
 Caso essa resposta ocorra, você vai receber as informações do game solicitado e os links relacionados, em modelo HATEOAS. Exemplo:
 
 ```
-http://localhost:8080/game/6
+    http://localhost:8080/game/6
 ```
 ```
 {
@@ -227,7 +227,7 @@ Responsável por deletar um game cadastrado no banco de dados.
 Exemplo:
 
 ```
-http://localhost:8080/game/1
+    http://localhost:8080/game/1
 ```
 
 #### _Respostas_
@@ -237,7 +237,7 @@ http://localhost:8080/game/1
 Caso essa resposta ocorra, o parâmetro "id" informado na rota não é do tipo numérico inteiro. Exemplo:
 
 ```
-http://localhost:8080/game/g
+    http://localhost:8080/game/g
 ```
 
 - ##### Ok (200)
@@ -265,7 +265,7 @@ Responsável por editar um game cadastrado no banco de dados.
 Exemplo:
 
 ```
-http://localhost:8080/game/1
+    http://localhost:8080/game/1
 ```
 ```
 {
@@ -282,7 +282,7 @@ http://localhost:8080/game/1
 Caso essa resposta ocorra, o parâmetro "id" informado na rota não é do tipo numérico inteiro. Exemplo:
 
 ```
-http://localhost:8080/game/g
+    http://localhost:8080/game/g
 ```
 
 - ##### Ok (200)
@@ -367,6 +367,68 @@ Exemplo:
 
 #### _Respostas_
 
-- ##### OK! 200
+- ##### Ok (200)
 
-- ##### Falha na Autenticação! 401
+Caso essa resposta ocorra, os parãmetros informados estão cadastrados no banco de dados de usuários e será gerado um token temporário de acesso à API de games. Exemplo:
+
+```
+{
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJlbWFpbEBkb3VzdWFyaW8uY29tIiwiaWF0IjoxNjYzMzM1MTQ2LCJleHAiOjE2NjM1MDc5NDZ9.AAeCtQw7H6-9XQHwOzvvzDGkWXrbY01XeG4OVqWTH2A"
+}
+```
+
+- ##### Bad Request (400)
+
+Caso essa resposta ocorra, ocorreu algum erro de sintaxe no envio dos parâmetros. O erro será exibido no console. Exemplo:
+
+```
+{
+    "email": "email@dousuario.com",
+    "password": "senhadousuario
+}
+```
+```
+SyntaxError: Unexpected token in JSON at position 71
+    at JSON.parse (<anonymous>)
+    at parse (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\types\json.js:89:19)
+    at C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:201:9)
+    at invokeCallback (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:231:16)
+    at done (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:220:7)
+    at IncomingMessage.onEnd (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:280:7)
+    at IncomingMessage.emit (node:events:538:35)
+    at endReadableNT (node:internal/streams/readable:1345:12)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+ ```
+
+- ##### Unauthorized (401)
+
+Caso essa resposta ocorra, significa que ocorreu alguma falha durante o processo de autenticação da requisição. Motivo: senha inválida. Exemplo:
+
+```
+{
+    "email": "email@dousuario.com",
+    "password": "senhadousuario1234"
+}
+```
+```
+{
+    "error":"Invalid authentication method"
+}
+```
+
+- ##### Not found (404)
+
+Caso essa resposta ocorra, significa que ocorreu alguma falha durante o processo de autenticação da requisição. Motivo: email não cadastrado. Exemplo:
+
+```
+{
+    "email": "email@dousuario1234.com",
+    "password": "senhadousuario"
+}
+```
+```
+{
+    "error":"Sended e-mail doesn't exist on database."
+}
+```
