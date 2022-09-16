@@ -179,11 +179,7 @@ Exemplo:
 
 - ##### Ok (200)
 
-Caso essa resposta ocorra, o game foi cadastrado com sucesso no banco de dados. Exemplo:
-
-```
-OK
-```
+Caso essa resposta ocorra, o game foi cadastrado com sucesso no banco de dados. 
 
 - ##### Bad Request (400)
 
@@ -241,24 +237,16 @@ http://localhost:8080/game/1
 Caso essa resposta ocorra, o parâmetro "id" informado na rota não é do tipo numérico inteiro. Exemplo:
 
 ```
-Bad Request
+http://localhost:8080/game/g
 ```
 
 - ##### Ok (200)
 
-Caso essa resposta ocorra, o game, cujo parâmetro "id" foi informado na rota, foi deletado do banco de dados. Exemplo:
-
-```
-OK
-```
+Caso essa resposta ocorra, o game, cujo parâmetro "id" foi informado na rota, foi deletado do banco de dados.
 
 - ##### Not found (404)
 
-Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valor numérico do parâmetro "id" informado na rota. Exemplo:
-
-```
-Not Found
-```
+Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valor numérico do parâmetro "id" informado na rota.
 
 ### PUT /game/:id
 
@@ -294,24 +282,69 @@ http://localhost:8080/game/1
 Caso essa resposta ocorra, o parâmetro "id" informado na rota não é do tipo numérico inteiro. Exemplo:
 
 ```
-Bad Request
+http://localhost:8080/game/g
 ```
 
 - ##### Ok (200)
 
-Caso essa resposta ocorra, o game, cujo parâmetro "id" foi informado na rota, foi atualizado, no banco de dados, com os parâmetros "title", "year" e "price" informados no corpo da requisição. Exemplo:
-
-```
-OK
-```
+Caso essa resposta ocorra, o game, cujo parâmetro "id" foi informado na rota, foi atualizado, no banco de dados, com os parâmetros "title", "year" e "price" informados no corpo da requisição.
 
 - ##### Not found (404)
 
-Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valor numérico do parâmetro "id" informado na rota. Exemplo:
+Caso essa resposta ocorra, não há game cadastrado no banco de dados com o valor numérico do parâmetro "id" informado na rota.
+
+### POST /user
+
+Responsável por cadastrar um usuário ao banco de dados de usuários, para que ele possa ter acesso à API de games.
+
+#### _Parâmetros_
+
+"name": nome do usuário.
+
+"email": e-mail utilizado pelo usuário.
+
+"password": senha utilizada pelo usuário.
+
+Exemplo:
 
 ```
-Not Found
+{
+    "name": "Nome do Usuário",
+    "email": "email@dousuario.com",
+    "password": "senhadousuario" 
+}
 ```
+
+#### _Respostas_
+
+- ##### Ok (200)
+
+Caso essa resposta ocorra, o usuário foi cadastrado com suscesso no banco de dados de usuários.
+
+- ##### Bad Request (400)
+
+Caso essa resposta ocorra, ocorreu algum erro de sintaxe no envio dos parâmetros. O erro será exibido no console. Exemplo:
+
+```
+{
+    "name": "Nome do Usuário",
+    "email": "email@dousuario.com"
+    "password": "senhadousuario" 
+}
+```
+```
+SyntaxError: Unexpected string in JSON at position 75
+    at JSON.parse (<anonymous>)
+    at parse (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\types\json.js:89:19)
+    at C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:201:9)
+    at invokeCallback (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:231:16)
+    at done (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:220:7)
+    at IncomingMessage.onEnd (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:280:7)
+    at IncomingMessage.emit (node:events:538:35)
+    at endReadableNT (node:internal/streams/readable:1345:12)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+ ```
 
 ### POST /auth
 
