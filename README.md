@@ -192,19 +192,6 @@ Caso essa resposta ocorra, ocorreu algum erro de sintaxe no envio dos parâmetro
     "price": 12
 }
 ```
-```
-SyntaxError: Unexpected string in JSON at position 57
-    at JSON.parse (<anonymous>)
-    at parse (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\types\json.js:89:19)
-    at C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\read.js:128:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:201:9)
-    at invokeCallback (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:231:16)
-    at done (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:220:7)
-    at IncomingMessage.onEnd (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:280:7)
-    at IncomingMessage.emit (node:events:538:35)
-    at endReadableNT (node:internal/streams/readable:1345:12)
-    at processTicksAndRejections (node:internal/process/task_queues:83:21)
- ```
 
 - ##### Unauthorized (401)
 
@@ -332,19 +319,6 @@ Caso essa resposta ocorra, ocorreu algum erro de sintaxe no envio dos parâmetro
     "password": "senhadousuario" 
 }
 ```
-```
-SyntaxError: Unexpected string in JSON at position 75
-    at JSON.parse (<anonymous>)
-    at parse (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\types\json.js:89:19)
-    at C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\read.js:128:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:201:9)
-    at invokeCallback (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:231:16)
-    at done (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:220:7)
-    at IncomingMessage.onEnd (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:280:7)
-    at IncomingMessage.emit (node:events:538:35)
-    at endReadableNT (node:internal/streams/readable:1345:12)
-    at processTicksAndRejections (node:internal/process/task_queues:83:21)
- ```
 
 ### POST /auth
 
@@ -387,19 +361,6 @@ Caso essa resposta ocorra, ocorreu algum erro de sintaxe no envio dos parâmetro
     "password": "senhadousuario
 }
 ```
-```
-SyntaxError: Unexpected token in JSON at position 71
-    at JSON.parse (<anonymous>)
-    at parse (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\types\json.js:89:19)
-    at C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\body-parser\lib\read.js:128:18
-    at AsyncResource.runInAsyncScope (node:async_hooks:201:9)
-    at invokeCallback (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:231:16)
-    at done (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:220:7)
-    at IncomingMessage.onEnd (C:\Users\erico\projetos\nodeJS\api-de-games\node_modules\raw-body\index.js:280:7)
-    at IncomingMessage.emit (node:events:538:35)
-    at endReadableNT (node:internal/streams/readable:1345:12)
-    at processTicksAndRejections (node:internal/process/task_queues:83:21)
- ```
 
 - ##### Unauthorized (401)
 
